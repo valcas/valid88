@@ -1,0 +1,15 @@
+<html>
+	<head>
+        <script type="module" src="src/core/Valid88.js"></script>
+	</head>
+<html>
+
+<script>
+
+      var V88 = new Valid88();
+      console.log(V88.getRegister());
+      
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:new Date(1999, 11, 23)};
+      V88.validateInput('userdetails', {user:user});
+
+</script>

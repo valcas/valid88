@@ -1,0 +1,39 @@
+{
+  "name": "valid88",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "babel": "babel --presets env src/core/Valid88.js -o valid88.js",
+    "build": "babel src/core/** -d lib",
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valcas/valid88.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valcas/valid88/issues"
+  },
+  "homepage": "https://github.com/valcas/valid88#readme",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "json-config": "github:valcas/json-config"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "finalhandler": "^1.1.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "jasmine": "^3.4.0",
+    "serve-static": "^1.14.1"
+  }
+}

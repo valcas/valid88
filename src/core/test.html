@@ -1,0 +1,153 @@
+<html>
+	<head>
+            <script type="module">
+                  import Valid88 from './Valid88.js';
+                  var v88 = new Valid88();
+                  start(v88);
+            </script>
+	</head>
+<html>
+
+<script>
+
+function start(v88)  {
+
+      window.setTimeout(function() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", '../../spec/testfiles/user-details.json', false ); // false for synchronous request
+            xmlHttp.send( null );
+            doTests(v88, xmlHttp.responseText);
+      }, 100);
+
+      window.setTimeout(function() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", '../../spec/testfiles/date-tests.json', false ); // false for synchronous request
+            xmlHttp.send( null );
+            testDates(v88, xmlHttp.responseText);
+      }, 100);
+
+}
+
+function doTests(v88, testConfig) {
+
+      v88.registerValidationSet(JSON.parse(testConfig));
+      testMandatory(v88);
+      testRegEx(v88);
+      testMaxLength(v88);
+      // testDate(v88);
+
+}
+
+function testMandatory(v88)      {
+
+      var user = {firstname:null};
+      var result = v88.validateInput('userdetails', {user:user});
+      console.log(result);      
+
+      var user = {firstname:null, lastname:null, dob:new Date(1989, 11, 23)};
+      var result = v88.validateInput('userdetails', {user:user});
+      console.log(result);      
+
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:new Date(1989, 11, 23)};
+      var result = v88.validateInput('userdetails', {user:user});
+      console.log(result);      
+
+}
+
+function testRegEx(v88)      {
+
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:new Date(1989, 11, 23)};
+      var result = v88.validateInput('userdetails', {user:user});
+      console.log(result);      
+
+      var user = {firstname:'Joe 1', lastname:'Bloggs', dob:new Date(1989, 11, 23)};
+      var result = v88.validateInput('userdetails', {user:user});
+      console.log(result);      
+
+      var user = {firstname:'Joe O\'Connell', lastname:'Bloggs', dob:new Date(1989, 11, 23)};
+      var result = v88.validateInput('userdetails', {user:user});
+      console.log(result);      
+
+}
+
+function testMaxLength(v88)      {
+
+      var user = {firstname:'this is some very long text which should\'t be allowed', lastname:'Bloggs', dob:new Date(1989, 11, 23)};
+      var result = v88.validateInput('userdetails', {user:user});
+      console.log(result);      
+
+}
+
+function testDates(v88, testConfig)      {
+
+      v88.registerValidationSet(JSON.parse(testConfig));
+      
+      var date = new Date();
+      date.setFullYear(date.getFullYear() - 20);
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+      var result = v88.validateInput('dob_yrs', {user:user});
+      console.log(result);      
+
+      date.setFullYear(date.getFullYear() + 4);
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+      var result = v88.validateInput('dob_yrs', {user:user});
+      console.log(result);      
+
+      date.setFullYear(date.getFullYear() - 65);
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+      var result = v88.validateInput('dob_yrs', {user:user});
+      console.log(result);      
+
+      var date = new Date();
+      date.setMonth(date.getMonth() - 20);
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+      var result = v88.validateInput('dob_mths', {user:user});
+      console.log(result);      
+
+      date.setMonth(date.getMonth() + 9);
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+      var result = v88.validateInput('dob_mths', {user:user});
+      console.log(result);      
+
+      date.setMonth(date.getMonth() - 50);
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+      var result = v88.validateInput('dob_mths', {user:user});
+      console.log(result);      
+
+      var date = new Date();
+      date.setDate(date.getDate() - 40);
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+      var result = v88.validateInput('dob_days', {user:user});
+      console.log(result);      
+
+      date.setDate(date.getDate() + 20);
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+      var result = v88.validateInput('dob_days', {user:user});
+      console.log(result);      
+
+      date.setDate(date.getDate() - 75);
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+      var result = v88.validateInput('dob_days', {user:user});
+      console.log(result);      
+
+      var dob = new Date();
+      dob.setFullYear(dob.getFullYear() - 18);
+      var refDate = new Date();
+      refDate.setFullYear(refDate.getFullYear() - 17);      
+      var user = {firstname:'Joe', lastname:'Bloggs', dob:dob};
+      var result = v88.validateInput('dob_before', {user:user}, {test_date:refDate});
+      console.log(result);      
+
+      var result = v88.validateInput('dob_after', {user:user}, {test_date:refDate});
+      console.log(result);      
+
+      refDate.setFullYear(refDate.getFullYear() - 2);      
+      var result = v88.validateInput('dob_before', {user:user}, {test_date:refDate});
+      console.log(result);      
+
+      var result = v88.validateInput('dob_after', {user:user}, {test_date:refDate});
+      console.log(result);      
+
+}
+
+</script>
