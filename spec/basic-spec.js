@@ -1,5 +1,5 @@
 // const CsvLukup = require('../build/csv-lukup.js').default;
-const Valid88 = require('../lib/Valid88').default;
+const Valid88 = require('../dist/Valid88').default;
 // const BaseValidator = require('../lib/validators/BaseValidator');
 const fs = require('fs');
 

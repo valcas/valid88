@@ -1,10 +1,11 @@
-import DateValidator from './validators/DateValidator.js';
-import MandatoryValidator from './validators/MandatoryValidator.js';
-import MaxLengthValidator from './validators/MaxLengthValidator.js';
-import RegExValidator from './validators/RegExValidator.js';
-import JsonConfig from 'JsonConfig.js';
+import DateValidator from './validators/DateValidator';
+import MandatoryValidator from './validators/MandatoryValidator';
+import MaxLengthValidator from './validators/MaxLengthValidator';
+import RegExValidator from './validators/RegExValidator';
 
-export default class Valid88  {
+import JsonConfig from 'json-config';
+
+export class Valid88  {
 
   constructor() {
     this.register = new Valid88Register();

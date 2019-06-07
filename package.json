@@ -1,11 +1,13 @@
 {
   "name": "valid88",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "", 
+  "main": "dist/Valid88.js",
+  "module": "src/Valid88.js",
   "scripts": {
     "babel": "babel --presets env src/core/Valid88.js -o valid88.js",
     "build": "babel src/core/** -d lib",
+    "buildw": "webpack",
     "test": "jasmine"
   },
   "repository": {
@@ -20,7 +22,7 @@
   "homepage": "https://github.com/valcas/valid88#readme",
   "dependencies": {
     "gulp": "^4.0.2",
-    "json-config": "github:valcas/json-config"
+    "json-config": "github:valcas/json-config#1.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -34,6 +36,9 @@
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "jasmine": "^3.4.0",
-    "serve-static": "^1.14.1"
+    "lodash": "^4.17.11",
+    "serve-static": "^1.14.1",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.3"
   }
 }
