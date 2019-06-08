@@ -1,9 +1,9 @@
 {
   "name": "valid88",
   "version": "1.0.0",
-  "description": "", 
-  "main": "dist/Valid88.js",
-  "module": "src/Valid88.js",
+  "description": "",
+  "entry": "./index",
+  "module": "./src/Valid88.js",
   "scripts": {
     "babel": "babel --presets env src/core/Valid88.js -o valid88.js",
     "build": "babel src/core/** -d lib",

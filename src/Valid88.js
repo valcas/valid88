@@ -3,7 +3,7 @@ import MandatoryValidator from './validators/MandatoryValidator';
 import MaxLengthValidator from './validators/MaxLengthValidator';
 import RegExValidator from './validators/RegExValidator';
 
-import JsonConfig from 'json-config';
+const JsonConfig = require('json-config').JsonConfig;
 
 export class Valid88  {
 

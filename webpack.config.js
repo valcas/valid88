@@ -3,9 +3,12 @@ const path = require('path');
 module.exports = {
     entry: './src/Valid88.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'lib'),
         filename: 'Valid88.js',
-        library: 'Valid88'
+        library: 'Valid88',
+        libraryTarget: 'umd',
+        umdNamedDefine: true,
+        globalObject: `(typeof self !== 'undefined' ? self : this)`    
     },
     externals: {
         lodash: {
