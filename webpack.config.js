@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: './src/Valid88.js',
+    mode: 'development',
     output: {
         path: path.resolve(__dirname, 'lib'),
         filename: 'Valid88.js',
