@@ -20,10 +20,7 @@
     "url": "https://github.com/valcas/valid88/issues"
   },
   "homepage": "https://github.com/valcas/valid88#readme",
-  "dependencies": {
-    "gulp": "^4.0.2",
-    "json-config": "github:valcas/json-config#1.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
@@ -36,6 +33,7 @@
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "jasmine": "^3.4.0",
+    "json-config": "github:valcas/json-config#1.1.0",
     "lodash": "^4.17.11",
     "serve-static": "^1.14.1",
     "webpack": "^4.33.0",

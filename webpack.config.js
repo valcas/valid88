@@ -7,8 +7,9 @@ module.exports = {
         path: path.resolve(__dirname, 'lib'),
         filename: 'Valid88.js',
         library: 'Valid88',
+        libraryTarget: 'umd',
         umdNamedDefine: true,
-        globalObject: 'this' //!!!This line
+        globalObject: `(typeof self !== 'undefined' ? self : this)`    
     },
     externals: {
         lodash: {
