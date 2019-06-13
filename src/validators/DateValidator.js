@@ -13,6 +13,9 @@ export default class DateValidator extends BaseValidator {
   validate(value, validCfg, field, params)  {
 
     if (value)  {
+      if ( ! (value instanceof Date)) {
+        value = new Date(new String(value));
+      }
       for (var i = 0; i < validCfg.variants.length; i++)  {
         var variant = validCfg.variants[i];
         var result = this.doValidation(variant, value, validCfg, field, params);

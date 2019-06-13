@@ -1,0 +1,9 @@
+{
+	"validationsets":[
+		{"name":"basicemail", "fields":[
+			{"name":"emailaddress", "field":"user.email", "type":"string", "validations":[
+				{"name":"email"}
+			]}
+		]}
+	]
+}

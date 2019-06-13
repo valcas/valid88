@@ -2,6 +2,7 @@ import DateValidator from './validators/DateValidator';
 import MandatoryValidator from './validators/MandatoryValidator';
 import MaxLengthValidator from './validators/MaxLengthValidator';
 import RegExValidator from './validators/RegExValidator';
+import EmailValidator from './validators/EmailValidator';
 
 const JsonConfig = require('json-config');
 
@@ -86,6 +87,7 @@ class Valid88Register  {
     new MandatoryValidator(this);
     new MaxLengthValidator(this);
     new RegExValidator(this);
+    new EmailValidator(this);
   }
 
   registerValidator(validator) {

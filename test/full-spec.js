@@ -1,4 +1,4 @@
-var userJSON, datesJSON;
+var userJSON, datesJSON, emailJSON;
 
 describe("Valid88 Tests", function() {
     
@@ -11,6 +11,10 @@ describe("Valid88 Tests", function() {
         xmlHttp.open( "GET", '../../spec/testfiles/date-tests.json', false );
         xmlHttp.send( null );
         datesJSON = JSON.parse(xmlHttp.responseText);
+
+        xmlHttp.open( "GET", '../../spec/testfiles/email-single.json', false );
+        xmlHttp.send( null );
+        emailJSON = JSON.parse(xmlHttp.responseText);
 
     });
     
@@ -286,6 +290,70 @@ describe("Valid88 Tests", function() {
             expect(result.errors.length).toBe(0);
             expect(result.status).toEqual(undefined);
   
+        });
+
+    });
+
+    describe('When there\'s an email validation configured', function(){
+
+        it("invalid email - no at", function() {
+
+            var v88 = new Valid88.Valid88();
+            v88.registerValidationSet(emailJSON);
+
+            var user = {email:'Joe.test'};
+            var result = v88.validateInput('basicemail', {user:user});
+            expect(result.errors.length).toBe(1);
+            expect(result.status).toBe('fail');      
+
+        });
+
+        it("invalid email - no domain dot", function() {
+
+            var v88 = new Valid88.Valid88();
+            v88.registerValidationSet(emailJSON);
+
+            var user = {email:'Joe@test'};
+            var result = v88.validateInput('basicemail', {user:user});
+            expect(result.errors.length).toBe(1);
+            expect(result.status).toBe('fail');      
+
+        });
+
+        it("invalid email - contains space", function() {
+
+            var v88 = new Valid88.Valid88();
+            v88.registerValidationSet(emailJSON);
+
+            var user = {email:'Joe bloggs@test'};
+            var result = v88.validateInput('basicemail', {user:user});
+            expect(result.errors.length).toBe(1);
+            expect(result.status).toBe('fail');      
+
+        });
+
+        it("invalid email - contains &", function() {
+
+            var v88 = new Valid88.Valid88();
+            v88.registerValidationSet(emailJSON);
+
+            var user = {email:'Joe&bloggs@test'};
+            var result = v88.validateInput('basicemail', {user:user});
+            expect(result.errors.length).toBe(1);
+            expect(result.status).toBe('fail');      
+
+        });
+
+        it("valid email", function() {
+
+            var v88 = new Valid88.Valid88();
+            v88.registerValidationSet(emailJSON);
+
+            var user = {email:'joe@test.com'};
+            var result = v88.validateInput('basicemail', {user:user});
+            expect(result.errors.length).toBe(0);
+            expect(result.status).toEqual(undefined);
+
         });
 
     });
