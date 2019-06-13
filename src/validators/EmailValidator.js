@@ -4,7 +4,7 @@ export default class EmailValidator extends BaseValidator {
 
   constructor(register) {
     super(register, 'email');
-    this.invalidChars = /& /;
+    this.invalidChars = '& ';
   }
 
   validate(value, validCfg, field)  {
@@ -21,7 +21,7 @@ export default class EmailValidator extends BaseValidator {
         } else if (testValue.indexOf('.', atPos) < (atPos + 1)) {
             valid = false;
         } else {
-            var pattern = new RegExp("(^[" + this.invalidChars + "]+)$");
+            var pattern = new RegExp("([" + this.invalidChars + "]+)");
             if (pattern.test(testValue)) {
                 valid = false;
             }

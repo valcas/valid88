@@ -325,7 +325,7 @@ describe("Valid88 Tests", function() {
             var v88 = new Valid88.Valid88();
             v88.registerValidationSet(emailJSON);
 
-            var user = {email:'Joe bloggs@test'};
+            var user = {email:'Joe bloggs@test.com'};
             var result = v88.validateInput('basicemail', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
@@ -337,7 +337,7 @@ describe("Valid88 Tests", function() {
             var v88 = new Valid88.Valid88();
             v88.registerValidationSet(emailJSON);
 
-            var user = {email:'Joe&bloggs@test'};
+            var user = {email:'Joe&bloggs@test.com'};
             var result = v88.validateInput('basicemail', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
