@@ -1,1 +1,1 @@
-module.exports = require('./lib/valid88').Valid88;
+module.exports = require('./lib/Valid88').Valid88;
