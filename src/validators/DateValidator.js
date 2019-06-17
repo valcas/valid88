@@ -8,6 +8,11 @@ export default class DateValidator extends BaseValidator {
       this.variants = {
         atleast:this.doAtLeast, atmost:this.doAtMost, before:this.doBefore, after:this.doAfter
       };
+      this.init();
+  }
+    
+  init()  {
+    this.errors = super.init(['DATE_ATLEAST','DATE_ATMOST','DATE_BEFORE','DATE_AFTER']);
   }
 
   validate(value, validCfg, field, params)  {
@@ -42,7 +47,8 @@ export default class DateValidator extends BaseValidator {
     var refDate = this.getRefDate(variant, value);
 
     if (refDate.getTime() > (new Date()).getTime()) {
-      return {result:'fail', message:`the field '${field.name}' must be at least ${variant.value} ${variant.datepart}`};
+      var values = [["field.name", field.name], ["variant.value", variant.value], ["variant.datepart", this.register.getMessageField("DATEPART_INTERVALS")[variant.datepart]]];
+      return this.prepareMessage(this.errors.DATE_ATLEAST, values);
     }
 
   }
@@ -52,7 +58,8 @@ export default class DateValidator extends BaseValidator {
     var refDate = this.getRefDate(variant, value);
 
     if (refDate.getTime() < (new Date()).getTime()) {
-      return {result:'fail', message:`the field '${field.name}' must be at most ${variant.value} ${variant.datepart}`};
+      var values = [["field.name", field.name], ["variant.value", variant.value], ["variant.datepart", this.register.getMessageField("DATEPART_INTERVALS")[variant.datepart]]];
+      return this.prepareMessage(this.errors.DATE_ATMOST, values);
     }
 
   }
@@ -60,14 +67,16 @@ export default class DateValidator extends BaseValidator {
   doBefore(variant, value, validCfg, field, params)  {
     var refDate = params[variant.ref];
     if (value.getTime() > refDate.getTime())  {
-      return {result:'fail', message:`the field '${field.name}' must be before ${refDate}`};
+      var values = [["field.name", field.name], ["refDate", refDate]];
+      return this.prepareMessage(this.errors.DATE_BEFORE, values);
     }
   }
   
   doAfter(variant, value, validCfg, field, params)  {
     var refDate = params[variant.ref];
     if (value.getTime() < refDate.getTime())  {
-      return {result:'fail', message:`the field '${field.name}' must be after ${refDate}`};
+      var values = [["field.name", field.name], ["refDate", refDate]];
+      return this.prepareMessage(this.errors.DATE_AFTER, values);
     }
   }
   

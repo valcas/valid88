@@ -1,6 +1,7 @@
+import ErrorMessages from './messages/ErrorMessages';
 import DateValidator from './validators/DateValidator';
 import MandatoryValidator from './validators/MandatoryValidator';
-import MaxLengthValidator from './validators/MaxLengthValidator';
+import LengthValidator from './validators/LengthValidator';
 import RegExValidator from './validators/RegExValidator';
 import EmailValidator from './validators/EmailValidator';
 
@@ -63,7 +64,7 @@ export class Valid88  {
     var result = validator.validate(fieldValue, validCfg, field, params);
     if (result) {
       results.status = 'fail';
-      results.errors.push({field:{name:field.name, path:field.field}, message:result.message});
+      results.errors.push({field:{name:field.name, path:field.field}, message:result.error.message, code:result.code});
     }
   }
 
@@ -76,18 +77,39 @@ export class Valid88  {
     return cfg.getValue(fields.split('.').join('/'), null);
   }
 
+  setLocale(locale) {
+    this.register.setLocale(locale);
+  }
+
 }
 
 class Valid88Register  {
 
   constructor() {
+    this.errorMessages = new ErrorMessages();
     this.validators = [];
     this.validationDef = null;
     new DateValidator(this);
     new MandatoryValidator(this);
-    new MaxLengthValidator(this);
+    new LengthValidator(this);
     new RegExValidator(this);
     new EmailValidator(this);
+  }
+
+  getErrorMessages()  {
+    return this.errorMessages.messages;
+  }
+
+  getErrorMessage(id) {
+    return this.errorMessages.messages[id];
+  }
+
+  getMessageFields()  {
+    return this.errorMessages.fields;
+  }
+
+  getMessageField(id)  {
+    return this.errorMessages.fields[id];
   }
 
   registerValidator(validator) {
@@ -112,6 +134,18 @@ class Valid88Register  {
         return this.validationDef.compositevalidations[i];
       }
     }
+  }
+
+  setLocale(locale) {
+
+    var _this = this;
+
+    this.errorMessages.messages = locale.messages;
+    this.errorMessages.fields = locale.fields;
+
+    Object.keys(this.validators).map(key => {
+      _this.validators[key].init();
+    })
   }
 
 }

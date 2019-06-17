@@ -5,8 +5,13 @@ export default class EmailValidator extends BaseValidator {
   constructor(register) {
     super(register, 'email');
     this.invalidChars = '& ';
+    this.init();
   }
-
+  
+  init()  {
+    this.errors = super.init(['EMAIL_DEFAULT']);
+  }
+    
   validate(value, validCfg, field)  {
     
     if (value)  {
@@ -27,7 +32,7 @@ export default class EmailValidator extends BaseValidator {
             }
         }
         
-        return valid ? null : {result:'fail', message:`the field '${field.name}' isn't a valid email`};
+        return valid ? null : this.prepareMessage(this.errors.EMAIL_DEFAULT, [["field.name", field.name]]);;
 
     }
 

@@ -1,0 +1,16 @@
+{
+    "messages" : {
+        "MAND_DEFAULT" :    "le champ '${field.name}' doit être fourni",
+        "EMAIL_DEFAULT" :   "le champ '${field.name}' n'est pas un email valide",
+        "DATE_ATLEAST" :    "le champ '${field.name}' doit être au moins ${variante.value} ${variante.datepart}",
+        "DATE_ATMOST" :     "le champ '${field.name}' doit être au plus ${variante.value} ${variante.datepart}",
+        "DATE_BEFORE" :     "le champ '${field.name}' doit être avant ${refDate}",
+        "DATE_AFTER" :      "le champ '${field.name}' doit être après ${refDate}",
+        "REGEX_DEFAULT" :   "le champ '${field.name}' contient des caractères invalides",
+        "LENGTH_MAX" :      "le champ '${field.name}' ne peut pas contenir plus de ${max} caractères",
+        "LENGTH_MIN" :      "le champ '${field.name}' doit contenir au moins ${min} caractères"
+    },
+    "fields" : {
+        "DATEPART_INTERVALS": {"days":"journées", "months":"mois", "years":"années"}
+    }
+}

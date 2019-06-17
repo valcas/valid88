@@ -5,6 +5,11 @@ export default class RegExValidator extends BaseValidator {
   constructor(register) {
     super(register, 'regex');
     this.regexPatterns = {alpha:'A-Za-z',numeric:'0-9', latin:'\\u0080-\\uFFFF'};
+    this.init();
+  }
+  
+  init()  {
+    this.errors = super.init(['REGEX_DEFAULT']);
   }
 
   constructRegexPattern(types, additionalchars) {
@@ -33,7 +38,7 @@ export default class RegExValidator extends BaseValidator {
       var pattern = this.constructRegexPattern(validCfg.value.types, validCfg.additionalchars);
       if (pattern) {
         if ( ! pattern.test(value)) {
-          return {result:'fail', message:`the field '${field.name}' contains invalid characters`};
+          return this.prepareMessage(this.errors.REGEX_DEFAULT, [["field.name", field.name]]);
         }
       }
     

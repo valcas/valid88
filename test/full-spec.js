@@ -28,6 +28,9 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('userdetails', {user:user});
             expect(result.errors.length).toBe(3);      
             expect(result.status).toBe('fail');      
+            expect(result.errors[0].code).toBe("MAND_DEFAULT");
+            expect(result.errors[1].code).toBe("MAND_DEFAULT");
+            expect(result.errors[2].code).toBe("MAND_DEFAULT");
         });
 
         it("all name fields fail", function() {
@@ -38,6 +41,8 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('userdetails', {user:user});
             expect(result.errors.length).toBe(2);
             expect(result.status).toBe('fail');      
+            expect(result.errors[0].code).toBe("MAND_DEFAULT");
+            expect(result.errors[1].code).toBe("MAND_DEFAULT");
         });
 
         it("all fields pass", function() {
@@ -72,6 +77,7 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('userdetails', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
+            expect(result.errors[0].code).toBe("REGEX_DEFAULT");
         });
 
         it("special character passes", function() {
@@ -96,6 +102,7 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('userdetails', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');
+            expect(result.errors[0].code).toBe("LENGTH_MAX");
         });
 
     });
@@ -127,7 +134,7 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('dob_yrs', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
-    
+            expect(result.errors[0].code).toBe("DATE_ATLEAST");
         });
 
         it("invalid dob years - too old", function() {
@@ -141,7 +148,7 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('dob_yrs', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');
-    
+            expect(result.errors[0].code).toBe("DATE_ATMOST");
         });
 
         it("valid dob months", function() {
@@ -169,7 +176,8 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('dob_mths', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
-  
+            expect(result.errors[0].code).toBe("DATE_ATLEAST");
+
         });
 
         it("in valid dob months - too old", function() {
@@ -183,7 +191,8 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('dob_mths', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
-  
+            expect(result.errors[0].code).toBe("DATE_ATMOST");
+
         });
 
         it("valid dob days", function() {
@@ -211,7 +220,8 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('dob_days', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
-  
+            expect(result.errors[0].code).toBe("DATE_ATLEAST");
+
         });
 
         it("invalid dob days - too old", function() {
@@ -225,7 +235,8 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('dob_days', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
-  
+            expect(result.errors[0].code).toBe("DATE_ATMOST");
+
         });
 
         it("invalid dob before", function() {
@@ -273,7 +284,8 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('dob_after', {user:user}, {test_date:refDate});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
-  
+            expect(result.errors[0].code).toBe("DATE_AFTER");
+
         });
 
         it("valid dob after", function() {
@@ -305,6 +317,7 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('basicemail', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
+            expect(result.errors[0].code).toBe("EMAIL_DEFAULT");
 
         });
 
@@ -317,6 +330,7 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('basicemail', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
+            expect(result.errors[0].code).toBe("EMAIL_DEFAULT");
 
         });
 
@@ -329,6 +343,7 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('basicemail', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
+            expect(result.errors[0].code).toBe("EMAIL_DEFAULT");
 
         });
 
@@ -341,6 +356,7 @@ describe("Valid88 Tests", function() {
             var result = v88.validateInput('basicemail', {user:user});
             expect(result.errors.length).toBe(1);
             expect(result.status).toBe('fail');      
+            expect(result.errors[0].code).toBe("EMAIL_DEFAULT");
 
         });
 
