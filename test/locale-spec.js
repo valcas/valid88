@@ -1,10 +1,17 @@
 var userJSON, localeJSON;
 
+const vars = {
+    FIRSTNAME:'Prénom',
+    LASTNAME:'Nom de famille',
+    EMAIL:'Email',
+    DOB:'Date de naissance',
+};
+
 describe("Valid88 Locale Tests", function() {
     
     beforeEach(function () {
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", '../../spec/testfiles/user-details.json', false );
+        xmlHttp.open( "GET", '../../spec/testfiles/locale-user.json', false );
         xmlHttp.send( null );
         userJSON = JSON.parse(xmlHttp.responseText);
 
@@ -14,12 +21,13 @@ describe("Valid88 Locale Tests", function() {
 
     });
 
-    describe('When there\'s a localised mandatory validation configured', function(){
+    describe('When there\'s a localised mandatory validation configured', function()    {
        
         it("all fields fail", function() {
             var v88 = new Valid88.Valid88();
             v88.setLocale(localeJSON);
             v88.registerValidationSet(userJSON);
+            v88.setVariables(vars);
 
             var user = {firstname:null};
             var result = v88.validateInput('userdetails', {user:user});

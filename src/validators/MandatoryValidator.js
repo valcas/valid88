@@ -13,7 +13,7 @@ export default class MandatoryValidator extends BaseValidator {
 
   validate(value, validCfg, field)  {
     if ((validCfg.value === true) && ((value == null) || (new String(value).trim().length === 0)))  {
-        return this.prepareMessage(this.errors.MAND_DEFAULT, [["field.name", field.name]]);
+        return this.prepareMessage(this.errors.MAND_DEFAULT, validCfg, field);
     }
   }
 

@@ -32,7 +32,7 @@ export default class EmailValidator extends BaseValidator {
             }
         }
         
-        return valid ? null : this.prepareMessage(this.errors.EMAIL_DEFAULT, [["field.name", field.name]]);;
+        return valid ? null : this.prepareMessage(this.errors.EMAIL_DEFAULT, validCfg, field);
 
     }
 

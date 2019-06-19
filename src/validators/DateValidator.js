@@ -47,8 +47,7 @@ export default class DateValidator extends BaseValidator {
     var refDate = this.getRefDate(variant, value);
 
     if (refDate.getTime() > (new Date()).getTime()) {
-      var values = [["field.name", field.name], ["variant.value", variant.value], ["variant.datepart", this.register.getMessageField("DATEPART_INTERVALS")[variant.datepart]]];
-      return this.prepareMessage(this.errors.DATE_ATLEAST, values);
+      return this.prepareMessage(this.errors.DATE_ATLEAST, validCfg, field, {VARIANT:variant});
     }
 
   }
@@ -58,8 +57,7 @@ export default class DateValidator extends BaseValidator {
     var refDate = this.getRefDate(variant, value);
 
     if (refDate.getTime() < (new Date()).getTime()) {
-      var values = [["field.name", field.name], ["variant.value", variant.value], ["variant.datepart", this.register.getMessageField("DATEPART_INTERVALS")[variant.datepart]]];
-      return this.prepareMessage(this.errors.DATE_ATMOST, values);
+      return this.prepareMessage(this.errors.DATE_ATMOST, validCfg, field, {VARIANT:variant});
     }
 
   }
@@ -68,7 +66,7 @@ export default class DateValidator extends BaseValidator {
     var refDate = params[variant.ref];
     if (value.getTime() > refDate.getTime())  {
       var values = [["field.name", field.name], ["refDate", refDate]];
-      return this.prepareMessage(this.errors.DATE_BEFORE, values);
+      return this.prepareMessage(this.errors.DATE_BEFORE, validCfg, field, {PRM:{"refDate":refDate}});
     }
   }
   
@@ -76,7 +74,7 @@ export default class DateValidator extends BaseValidator {
     var refDate = params[variant.ref];
     if (value.getTime() < refDate.getTime())  {
       var values = [["field.name", field.name], ["refDate", refDate]];
-      return this.prepareMessage(this.errors.DATE_AFTER, values);
+      return this.prepareMessage(this.errors.DATE_AFTER, validCfg, field, {PRM:{"refDate":refDate}});
     }
   }
   

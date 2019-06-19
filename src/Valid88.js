@@ -81,6 +81,10 @@ export class Valid88  {
     this.register.setLocale(locale);
   }
 
+  setVariables(vars)  {
+    this.register.setVariables(vars);
+  }
+
 }
 
 class Valid88Register  {
@@ -89,6 +93,7 @@ class Valid88Register  {
     this.errorMessages = new ErrorMessages();
     this.validators = [];
     this.validationDef = null;
+    this.variables = null;
     new DateValidator(this);
     new MandatoryValidator(this);
     new LengthValidator(this);
@@ -110,6 +115,10 @@ class Valid88Register  {
 
   getMessageField(id)  {
     return this.errorMessages.fields[id];
+  }
+
+  getVariables()  {
+    return this.variables;
   }
 
   registerValidator(validator) {
@@ -140,12 +149,22 @@ class Valid88Register  {
 
     var _this = this;
 
-    this.errorMessages.messages = locale.messages;
-    this.errorMessages.fields = locale.fields;
+    if (locale == null) {
+      this.errorMessages.messages = this.errorMessages.defaultMessages;
+      this.errorMessages.fields = this.errorMessages.defaultFields;
+    } else {
+      this.errorMessages.messages = locale.messages;
+      this.errorMessages.fields = locale.fields;          
+    }
 
     Object.keys(this.validators).map(key => {
       _this.validators[key].init();
-    })
+    });
+
+  }
+
+  setVariables(vars)  {
+    this.variables = vars;
   }
 
 }

@@ -1,6 +1,10 @@
+const JsonConfig = require('json-config');
+
+
 export default class BaseValidator {
 
   constructor(register, name) {
+      // this.markers = ['FLD', 'CFG', 'DEF', 'VARIANT', 'PRM', 'VAR'];
       this.register = register;
       this.name = name;
       register.registerValidator(this);
@@ -22,11 +26,18 @@ export default class BaseValidator {
 
   }
 
-  prepareMessage(err, items)  {
+  prepareMessage(err, validCfg, field, params)  {
+
+    params = (params == null) ? {} : params;
+    params.DEF = field;
+    params.CFG = validCfg;
+    params.VAR = this.register.getVariables();
+
+    var jCfg = new JsonConfig(params);
 
     var clonedErr = JSON.parse(JSON.stringify(err));
-    clonedErr.message = this.substitute(clonedErr.message, items);
-    // clonedErr.message = this.substituteFields(clonedErr.message, 'FIELD');
+    clonedErr.message = this.substituteFields(clonedErr.message, '', jCfg);
+
     return {code:clonedErr.code, error:clonedErr};
 
   }
@@ -41,19 +52,28 @@ export default class BaseValidator {
 
   }
 
-  // substituteFields(str, markerName) {
+  substituteMarkerTypes(str, jCfg) {
+    this.markers.map(marker => {
+      str = this.substituteFields(str, marker, jCfg);
+    });
+    return str;
+  }
 
-  //   var startPos = str.indexOf(`$${markerName}{`);
+  substituteFields(str, markerName, jCfg) {
 
-  //   while (startPos > -1) {
-  //     var endPos = str.indexOf("}", startPos);
-  //     var field = str.substring(startPos + markerName.length + 2, endPos);
-  //     var value = this.register.getMessageField([field]);
-  //     str = str.substring(startPos) + value + str.substring(endPos + 1, str.length);
-  //   }
+    var startPos = new String(str).indexOf(`$${markerName}{`);
 
-  //   return str;
+    while (startPos > -1) {
+      var endPos = str.indexOf("}", startPos);
+      var field = str.substring(startPos + markerName.length + 2, endPos);
+      var value = jCfg.getValue(`${field.split('.').join('/')}`, '');
+      value = this.substituteFields(value, '', jCfg);
+      str = str.substring(0, startPos) + value + str.substring(endPos + 1, str.length);
+      startPos = str.indexOf(`$${markerName}{`, startPos);
+    }
 
-  // }
+    return str;
+
+  }
 
 }

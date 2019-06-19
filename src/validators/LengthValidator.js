@@ -13,10 +13,10 @@ export default class LengthValidator extends BaseValidator {
 
   validate(value, validCfg, field)  {
     if (value && validCfg.max && (value.length > validCfg.max))  {
-      return this.prepareMessage(this.errors.LENGTH_MAX, [["field.name", field.name],["max", validCfg.max]]);
+      return this.prepareMessage(this.errors.LENGTH_MAX, validCfg, field);
     }    
     if (value && validCfg.min && (value.length < validCfg.min))  {
-      return this.prepareMessage(this.errors.LENGTH_MAX, [["field.name", field.name],["min", validCfg.min]]);
+      return this.prepareMessage(this.errors.LENGTH_MAX, validCfg, field);
     }    
   }
 

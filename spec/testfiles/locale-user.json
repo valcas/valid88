@@ -1,15 +1,15 @@
 {
 	"validationsets":[
 		{"name":"userdetails", "fields":[
-			{"name":"firstname", "label":"Firstname", "field":"user.firstname", "type":"string", "validations":[
+			{"name":"firstname", "label":"${VAR.FIRSTNAME}", "field":"user.firstname", "type":"string", "validations":[
 				{"name":"mandatory", "value":true},
 				{"name":"regex", "value":{"types":["alpha","latin"]}, "additionalchars":"' "},
 				{"name":"minmaxlength", "max":24, "min":2}
 			]},
-			{"name":"lastname", "label":"Lastname", "field":"user.lastname", "type":"string", "validations":[
+			{"name":"lastname", "label":"${VAR.LASTNAME}", "field":"user.lastname", "type":"string", "validations":[
 				{"name":"standardname", "composite":true}
 			]},
-			{"name":"dob", "label":"DOB", "field":"user.dob", "type":"date", "validations":[
+			{"name":"dob", "label":"${VAR.DOB}", "field":"user.dob", "type":"date", "validations":[
 				{"name":"mandatory", "value":true},
 				{"name":"date", "variants":
 					[

@@ -38,7 +38,7 @@ export default class RegExValidator extends BaseValidator {
       var pattern = this.constructRegexPattern(validCfg.value.types, validCfg.additionalchars);
       if (pattern) {
         if ( ! pattern.test(value)) {
-          return this.prepareMessage(this.errors.REGEX_DEFAULT, [["field.name", field.name]]);
+          return this.prepareMessage(this.errors.REGEX_DEFAULT, validCfg, field);
         }
       }
     
