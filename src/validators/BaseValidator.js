@@ -32,6 +32,7 @@ export default class BaseValidator {
     params.DEF = field;
     params.CFG = validCfg;
     params.VAR = this.register.getVariables();
+    params.FLD = this.register.getMessageFields()
 
     var jCfg = new JsonConfig(params);
 
@@ -66,10 +67,14 @@ export default class BaseValidator {
     while (startPos > -1) {
       var endPos = str.indexOf("}", startPos);
       var field = str.substring(startPos + markerName.length + 2, endPos);
+      while (field.indexOf('${') > -1) {
+        startPos += field.indexOf(`$${markerName}{`) + 2;
+        field = str.substring(startPos + markerName.length + 2, endPos);
+      }
       var value = jCfg.getValue(`${field.split('.').join('/')}`, '');
       value = this.substituteFields(value, '', jCfg);
       str = str.substring(0, startPos) + value + str.substring(endPos + 1, str.length);
-      startPos = str.indexOf(`$${markerName}{`, startPos);
+      startPos = str.indexOf(`$${markerName}{`);
     }
 
     return str;

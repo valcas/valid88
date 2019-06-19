@@ -43,5 +43,24 @@ describe("Valid88 Locale Tests", function() {
 
     });
 
+    describe('When there\'s a date validation configured', function(){
+
+        it("invalid dob years - too young", function() {
+
+            var v88 = new Valid88.Valid88();
+            v88.setLocale(localeJSON);
+            v88.registerValidationSet(userJSON);
+            v88.setVariables(vars);
+
+            var date = new Date();
+            date.setFullYear(date.getFullYear() - 16);
+            var user = {firstname:'Joe', lastname:'Bloggs', dob:date};
+            var result = v88.validateInput('dob_yrs', {user:user});
+            expect(result.errors.length).toBe(1);
+            expect(result.status).toBe('fail');      
+            expect(result.errors[0].code).toBe("DATE_ATLEAST");
+        });
+
+    });
 
 });

@@ -18,7 +18,17 @@
 					]
 				}
 			]}
-		]}
+        ]},
+		{"name":"dob_yrs", "fields":[
+			{"name":"dob", "label":"DOB", "field":"user.dob", "type":"date", "validations":[
+				{"name":"date", "variants":
+					[
+						{"type":"atleast", "value":18, "datepart":"years"},
+						{"type":"atmost", "value":80, "datepart":"years"}
+					]
+				}
+			]}
+		]}        
 	],
 
 	"compositevalidations":[

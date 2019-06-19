@@ -2,7 +2,7 @@
     "messages" : {
         "MAND_DEFAULT" :    "Le champ '${DEF.label}' doit être fourni",
         "EMAIL_DEFAULT" :   "Le champ '${DEF.label}' n'est pas un email valide",
-        "DATE_ATLEAST" :    "Le champ '${DEF.label}' doit être au moins ${VARIANT.value} ${VARIANT.datepart}",
+        "DATE_ATLEAST" :    "Le champ '${DEF.label}' doit être au moins ${VARIANT.value} ${FLD.DATEPART_INTERVALS.${VARIANT.datepart}}",
         "DATE_ATMOST" :     "Le champ '${DEF.label}' doit être au plus ${VARIANT.value} ${VARIANT.datepart}",
         "DATE_BEFORE" :     "Le champ '${DEF.label}' doit être avant ${PRM.refDate}",
         "DATE_AFTER" :      "Le champ '${DEF.label}' doit être après ${PRM.refDate}",
