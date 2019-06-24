@@ -1,0 +1,30 @@
+{
+	"validationsets":[
+		{"name":"userdetails", "fields":[
+			{"name":"profile", "label":"Profile", "field":"user.profile", "type":"string", "validations":[
+				{"name":"mandatory", "value":true},
+				{"name":"minmaxlength", "max":255, "min":20}
+			], "validationsServer":[
+				{"name":"escapeHTML", "value":true, "failOnDiff":true}
+			]}
+		]},
+		{"name":"userdetailsReplace", "fields":[
+			{"name":"profile", "label":"Profile", "field":"user.profile", "type":"string", "validations":[
+				{"name":"mandatory", "value":true},
+				{"name":"minmaxlength", "max":255, "min":20}
+			], "validationsServer":[
+				{"name":"escapeHTML", "value":true}
+			]}
+		]}
+	],
+
+	"compositevalidations":[
+		{"name": "standardname", "type":"string", "validations":[
+			{"name":"mandatory", "value":true},
+			{"name":"regex", "value":{"types":["alpha","latin"]}, "additionalchars":"' "},
+			{"name":"minmaxlength", "max":24}
+		], "validationsServer":[
+			{"name":"escapeHTML", "value":true, "failOnDiff":true}
+		]}
+	]
+}

@@ -4,6 +4,7 @@ import MandatoryValidator from './validators/MandatoryValidator';
 import LengthValidator from './validators/LengthValidator';
 import RegExValidator from './validators/RegExValidator';
 import EmailValidator from './validators/EmailValidator';
+import EscapeHTMLValidator from './validators/EscapeHTMLValidator';
 
 const JsonConfig = require('json-config');
 
@@ -25,46 +26,57 @@ export class Valid88  {
 
     var validationSet = this.register.getValidationSet(vSetName);
 
-    var results = {errors:[]};
+    let ctx = new V88Context({vSetName:vSetName, payload:payload, params:params});
 
     for (var i = 0; i < validationSet.fields.length; i++) {
 
-      var fld = validationSet.fields[i];
-      var fieldValue = this.getObjectField(payload, fld.field);
-
-      for (var iVal = 0; iVal < fld.validations.length; iVal++) {
-
-        if (fld.validations[iVal].composite) {
-          this.doCompositeValidation(fld.validations[iVal], fieldValue, fld, params, results);
-        } else {
-          var validator = this.register.validators[fld.validations[iVal].name];
-          this.doValidation(validator, fieldValue, fld, fld.validations[iVal], params, results);
-        }
-
+      ctx.context.fld = validationSet.fields[i];
+      ctx.context.fieldValue = this.getObjectField(ctx.context.payload, ctx.context.fld.field);
+      this.doValidationTypes(ctx, ctx.context.fld.validations);
+      if (ctx.context.fld.validationsServer)  {
+        this.doValidationTypes(ctx, ctx.context.fld.validationsServer);
       }
 
     }
 
-    return results;
+    return ctx.results;
 
   }
 
-  doCompositeValidation(composite, fieldValue, field, params, results) {
+  doValidationTypes(ctx, validations) {
+
+    for (var iVal = 0; iVal < validations.length; iVal++) {
+
+      if (validations[iVal].composite) {
+        this.doCompositeValidation(ctx, validations[iVal]);
+      } else {
+        var validator = this.register.validators[validations[iVal].name];
+        this.doValidation(ctx, validator, validations[iVal]);
+      }
+
+    }
+
+  }
+
+  doCompositeValidation(ctx, composite) {
 
     var compValidations = this.register.getCompositeValidation(composite.name);
 
     for (var i = 0; i < compValidations.validations.length; i++)  {
       var validator = this.register.validators[compValidations.validations[i].name];
-      this.doValidation(validator, fieldValue, field, compValidations.validations[i], params, results);
+      this.doValidation(ctx, validator, compValidations.validations[i]);
     }
 
   }
 
-  doValidation(validator, fieldValue, field, validCfg, params, results)  {
-    var result = validator.validate(fieldValue, validCfg, field, params);
+  doValidation(ctx, validator, validCfg)  {
+    var result = validator.validate(ctx.context.fieldValue, validCfg, ctx.context.fld, ctx.context.params);
     if (result) {
-      results.status = 'fail';
-      results.errors.push({field:{name:field.name, path:field.field}, message:result.error.message, code:result.code});
+      if (result.changevalue) {
+        ctx.changeValue(result);
+      } else {
+        ctx.addError(result);
+      }
     }
   }
 
@@ -85,6 +97,48 @@ export class Valid88  {
     this.register.setVariables(vars);
   }
 
+  getClientOnlyValidations()  {
+    var vSets = JSON.parse(JSON.stringify(this.register.getValidationSets()));
+
+    for (let vs = 0; vs < vSets.validationsets.length; vs++)  {
+      let vSet = vSets.validationsets[vs];
+      for (let f = 0; f < vSet.fields.length; f++)  {
+        let field = vSet.fields[f];
+        if (field.validationsServer) {
+          delete field.validationsServer;
+        }
+      }
+    }
+
+    for (let cv = 0; cv < vSets.compositevalidations.length; cv++)  {
+      let validation = vSets.compositevalidations[cv];
+      if (validation.validationsServer) {
+        delete validation.validationsServer;
+      }
+    }
+
+    return vSets;
+  }
+
+}
+
+class V88Context  {
+
+  constructor(cxt) {
+    this.results = {errors:[]};
+    this.context = cxt;
+  }
+
+  addError(result)  {
+    this.results.status = 'fail';
+    this.results.errors.push({field:{name:this.context.fld.name, path:this.context.fld.field}, message:result.error.message, code:result.code});
+  }
+
+  changeValue(result) {
+    var cfg = new JsonConfig(this.context.payload);
+    cfg.setValue(this.context.fld.field.split('.').join('/'), result.newvalue);
+  }
+
 }
 
 class Valid88Register  {
@@ -99,6 +153,7 @@ class Valid88Register  {
     new LengthValidator(this);
     new RegExValidator(this);
     new EmailValidator(this);
+    new EscapeHTMLValidator(this);
   }
 
   getErrorMessages()  {
@@ -127,6 +182,10 @@ class Valid88Register  {
 
   registerValidationSet(validationSet) {
     this.validationDef = validationSet;
+  }
+
+  getValidationSets() {
+    return this.validationDef;
   }
 
   getValidationSet(name)  {

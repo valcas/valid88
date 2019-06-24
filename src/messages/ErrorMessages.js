@@ -12,6 +12,7 @@ export default class ErrorMessages  {
             "REGEX_DEFAULT" :   "The field '${DEF.label}' contains invalid characters",
             "LENGTH_MAX" :      "The field '${DEF.label}' cannot be longer than ${CFG.max} characters`",
             "LENGTH_MIN" :      "The field '${DEF.label}' must be at least ${CFG.min} characters`",
+            "ESC_HTML_DEFAULT": "The field '${DEF.label}' contains invalid characters",
         }
         this.fields = {
             "DATEPART_INTERVALS": {"days":"days", "months":"months", "years":"years"}
